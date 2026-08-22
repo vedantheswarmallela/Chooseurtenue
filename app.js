@@ -1398,18 +1398,47 @@ function bindVaultEvents() {
       elements.vaultPinInput.value = '';
     });
   }
+  // Global delegation for any Vault button click
+  document.addEventListener('click', (e) => {
+    const vaultBtn = e.target.closest('#openVaultFooterBtn, .footer-vault-btn, #openVaultFloatingBtn, .btn-floating-vault-discreet');
+    if (vaultBtn) {
+      e.preventDefault();
+      e.stopPropagation();
+      openVaultModal();
+    }
+  });
 }
 
 function openVaultModal() {
-  elements.adminVaultModal.classList.remove('hidden');
-  elements.adminVaultModal.setAttribute('aria-hidden', 'false');
-  elements.vaultPinInput.focus();
+  const modal = document.getElementById('adminVaultModal') || elements.adminVaultModal;
+  if (modal) {
+    modal.classList.remove('hidden');
+    modal.style.display = 'flex';
+    modal.setAttribute('aria-hidden', 'false');
+    
+    // Reset to auth form view
+    const authSection = document.getElementById('vaultAuthSection') || elements.vaultAuthSection;
+    const dashboardSection = document.getElementById('vaultDashboardSection') || elements.vaultDashboardSection;
+    if (authSection) authSection.classList.remove('hidden');
+    if (dashboardSection) dashboardSection.classList.add('hidden');
+
+    const pinInput = document.getElementById('vaultPinInput') || elements.vaultPinInput;
+    if (pinInput) {
+      pinInput.value = '';
+      setTimeout(() => pinInput.focus(), 100);
+    }
+  }
 }
 
 function closeVaultModal() {
-  elements.adminVaultModal.classList.add('hidden');
-  elements.adminVaultModal.setAttribute('aria-hidden', 'true');
-  elements.vaultAuthError.classList.add('hidden');
+  const modal = document.getElementById('adminVaultModal') || elements.adminVaultModal;
+  if (modal) {
+    modal.classList.add('hidden');
+    modal.style.display = 'none';
+    modal.setAttribute('aria-hidden', 'true');
+    const authErr = document.getElementById('vaultAuthError') || elements.vaultAuthError;
+    if (authErr) authErr.classList.add('hidden');
+  }
 }
 
 function getVaultUsers() {

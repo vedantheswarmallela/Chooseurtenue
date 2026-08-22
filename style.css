@@ -1836,6 +1836,10 @@ button {
   }
 }
 
+.hidden {
+  display: none !important;
+}
+
 /* ========================================================
    CREATOR DATA VAULT MODAL (PIN PROTECTED)
    ======================================================== */
@@ -1845,15 +1849,19 @@ button {
   left: 0;
   width: 100vw;
   height: 100vh;
-  background: rgba(15, 23, 42, 0.72);
+  background: rgba(15, 23, 42, 0.78);
   backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
-  z-index: 99999;
+  z-index: 999999;
   display: flex;
   align-items: center;
   justify-content: center;
   padding: clamp(1rem, 3vw, 2rem);
   animation: fadeIn 0.25s ease-out;
+}
+
+.vault-modal-backdrop.hidden {
+  display: none !important;
 }
 
 .vault-modal-container {
