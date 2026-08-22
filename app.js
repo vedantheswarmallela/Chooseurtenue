@@ -833,9 +833,6 @@ function renderCombosList() {
           <span class="category-tag ${tagClass}">${combo.styleTag || combo.colorName}</span>
         </div>
         <p class="combo-desc">${combo.desc}</p>
-        <div class="combo-shoes-row">
-          <strong>Best Shoes:</strong> ${combo.shoes}
-        </div>
       </div>
       <button class="combo-action-btn" type="button">
         ${isSelected ? '✓ Paired' : 'Select'}
@@ -858,17 +855,13 @@ function renderPantVisualizer(combo) {
 
   // Update 3/4 Real Pant Photo seamlessly below the shirt
   const imgSrc = combo.image || 'images/pant_page_1.jpg';
-  elements.visualizerPantRealImg.src = imgSrc;
-
-  // Update Styling Advice Box (No Pant Name)
-  elements.stylingShoeAdvice.textContent = `Pair with ${combo.shoes}.`;
-  elements.vibePill.textContent = combo.colorName || 'Pant Color';
-  elements.contrastPill.textContent = combo.contrast || 'Balanced Harmony';
-  elements.fabricPill.textContent = combo.fabric || 'Quality Fabric';
+  if (elements.visualizerPantRealImg) {
+    elements.visualizerPantRealImg.src = imgSrc;
+  }
 }
 
 // ========================================================
-// DOWNLOADABLE OUTFIT LOOKBOOK (CLEAN PHOTO - NO NAMES)
+// DOWNLOADABLE OUTFIT LOOKBOOK (CLEAN PHOTO ONLY - NO TEXT)
 // ========================================================
 function downloadOutfitLookbook() {
   const shirtImg = elements.uploadedPhotoPreview;
@@ -913,12 +906,12 @@ function downloadOutfitLookbook() {
   ctx.stroke();
   ctx.restore();
 
-  // 2. Pure Visual Combined Outfit Frame (3/4 Shirt + 3/4 Pant - NO NAMES)
-  const frameX = 70;
-  const frameY = 70;
-  const frameW = width - 140;
-  const shirtH = 550; // 3/4 Shirt Height
-  const pantH = 590;  // 3/4 Pant Height
+  // 2. Pure Visual Combined Outfit Frame (3/4 Shirt + 3/4 Pant)
+  const frameX = 65;
+  const frameY = 65;
+  const frameW = width - 130;
+  const shirtH = 630; // 3/4 Shirt Height
+  const pantH = 640;  // 3/4 Pant Height
   const totalFrameH = shirtH + pantH;
 
   // Dark studio backdrop inside outfit frame
@@ -935,7 +928,7 @@ function downloadOutfitLookbook() {
   const seamY = frameY + shirtH;
   const seamGrad = ctx.createLinearGradient(frameX, seamY, frameX + frameW, seamY);
   seamGrad.addColorStop(0, 'rgba(255,255,255,0.05)');
-  seamGrad.addColorStop(0.5, 'rgba(255,255,255,0.65)');
+  seamGrad.addColorStop(0.5, 'rgba(255,255,255,0.75)');
   seamGrad.addColorStop(1, 'rgba(255,255,255,0.05)');
   ctx.fillStyle = seamGrad;
   ctx.fillRect(frameX, seamY - 1.5, frameW, 3);
@@ -952,30 +945,7 @@ function downloadOutfitLookbook() {
   ctx.stroke();
   ctx.restore();
 
-  // 3. Footwear Styling Box Below (Pure Style Tips - NO NAMES)
-  const infoY = frameY + totalFrameH + 20;
-  const infoH = 110;
-  ctx.save();
-  drawRoundedRect(ctx, frameX, infoY, frameW, infoH, 18);
-  ctx.fillStyle = 'rgba(237, 233, 254, 0.88)';
-  ctx.fill();
-  ctx.lineWidth = 2;
-  ctx.strokeStyle = 'rgba(196, 181, 253, 0.85)';
-  ctx.stroke();
-
-  // Shoes Recommendation
-  ctx.fillStyle = '#1E293B';
-  ctx.font = '600 24px "Plus Jakarta Sans", sans-serif';
-  ctx.textAlign = 'left';
-  ctx.fillText(`👟 Footwear Pairing: ${combo.shoes}`, frameX + 28, infoY + 45);
-
-  // Pills Row (Color Tone & Fabric)
-  ctx.fillStyle = '#6D28D9';
-  ctx.font = 'bold 20px "Plus Jakarta Sans", sans-serif';
-  ctx.fillText(`✨ ${combo.colorName}   •   👖 ${combo.fitType}   •   🧵 ${combo.fabric}`, frameX + 28, infoY + 85);
-  ctx.restore();
-
-  // 4. Trigger Instant Image Download
+  // 3. Trigger Instant Image Download
   setTimeout(() => {
     try {
       const dataUrl = canvas.toDataURL('image/png');
