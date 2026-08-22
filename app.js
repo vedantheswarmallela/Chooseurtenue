@@ -639,6 +639,7 @@ function loadSavedUser() {
   if (savedName && savedAge) {
     state.user.name = savedName;
     state.user.age = parseInt(savedAge, 10);
+    recordUserInVault(state.user.name, state.user.age);
     showStudio();
   }
 }
