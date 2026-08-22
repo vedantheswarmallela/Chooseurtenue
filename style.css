@@ -374,6 +374,19 @@ button {
   margin-top: 0.15rem;
 }
 
+.creator-name-styled {
+  font-family: 'Playfair Display', 'Syne', serif;
+  font-style: italic;
+  font-weight: 700;
+  font-size: clamp(0.88rem, 2vw, 0.98rem);
+  letter-spacing: 0.4px;
+  background: linear-gradient(135deg, #5B21B6 0%, #7C3AED 50%, #4F46E5 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  display: inline-block;
+  padding: 0 1px;
+}
+
 .creator-tag {
   display: inline-block;
   font-weight: 800;
