@@ -422,112 +422,37 @@ const SHIRT_COLORS_DATA = {
     id: 'lightblue',
     name: 'Light / Sky Blue',
     hex: '#93C5FD',
-    combos: [
-      MASTER_PANTS[5], // Mid Indigo (Blue)
-      MASTER_PANTS[1], // Washed Black (Black)
-      MASTER_PANTS[4], // Cream Linen (Cream)
-      MASTER_PANTS[6], // Desert Khaki (Brown)
-      MASTER_PANTS[9], // Army Olive (Green)
-      MASTER_PANTS[11], // Washed Charcoal (Black)
-      MASTER_PANTS[14], // Olive Corduroy (Green)
-      MASTER_PANTS[15], // Tan Corduroy (Brown)
-      MASTER_PANTS[16], // Sand Camel (Brown)
-      MASTER_PANTS[17], // Khaki Cargo (Brown)
-      MASTER_PANTS[20], // Ecru Seam (Cream)
-      MASTER_PANTS[23], // Chocolate Brown (Brown)
-      MASTER_PANTS[24]  // Sand Beige (Brown)
-    ]
+    combos: MASTER_PANTS
   },
   navy: {
     id: 'navy',
     name: 'Classic Navy Blue',
     hex: '#1E293B',
-    combos: [
-      MASTER_PANTS[6], // Desert Khaki (Brown)
-      MASTER_PANTS[0], // Light Washed (Blue)
-      MASTER_PANTS[4], // Cream Linen (Cream)
-      MASTER_PANTS[15], // Tan Corduroy (Brown)
-      MASTER_PANTS[16], // Sand Camel (Brown)
-      MASTER_PANTS[12], // Sand Beige (Brown)
-      MASTER_PANTS[8], // Black Pinstripe (Black)
-      MASTER_PANTS[9], // Army Olive (Green)
-      MASTER_PANTS[11], // Washed Charcoal (Black)
-      MASTER_PANTS[20], // Ecru Seam (Cream)
-      MASTER_PANTS[23], // Chocolate Brown (Brown)
-      MASTER_PANTS[24]  // Sand Beige (Brown)
-    ]
+    combos: MASTER_PANTS
   },
   black: {
     id: 'black',
     name: 'Sleek Black',
     hex: '#18181B',
-    combos: [
-      MASTER_PANTS[0], // Light Washed (Blue)
-      MASTER_PANTS[2], // Ice Blue (Blue)
-      MASTER_PANTS[6], // Desert Khaki (Brown)
-      MASTER_PANTS[9], // Army Olive (Green)
-      MASTER_PANTS[11], // Washed Charcoal (Black)
-      MASTER_PANTS[13], // Dark Slate (Black)
-      MASTER_PANTS[14], // Olive Corduroy (Green)
-      MASTER_PANTS[15], // Tan Corduroy (Brown)
-      MASTER_PANTS[16], // Sand Camel (Brown)
-      MASTER_PANTS[18], // Obsidian Black (Black)
-      MASTER_PANTS[19], // Jet Black Cargo (Black)
-      MASTER_PANTS[20], // Ecru Seam (Cream)
-      MASTER_PANTS[22], // Faded Ombre (Black)
-      MASTER_PANTS[24]  // Sand Beige (Brown)
-    ]
+    combos: MASTER_PANTS
   },
   charcoal: {
     id: 'charcoal',
     name: 'Charcoal / Dark Grey',
     hex: '#334155',
-    combos: [
-      MASTER_PANTS[0], // Light Washed (Blue)
-      MASTER_PANTS[2], // Ice Blue (Blue)
-      MASTER_PANTS[4], // Cream Linen (Cream)
-      MASTER_PANTS[6], // Desert Khaki (Brown)
-      MASTER_PANTS[9], // Army Olive (Green)
-      MASTER_PANTS[15], // Tan Corduroy (Brown)
-      MASTER_PANTS[16], // Sand Camel (Brown)
-      MASTER_PANTS[19], // Black Cargo (Black)
-      MASTER_PANTS[20], // Ecru Seam (Cream)
-      MASTER_PANTS[24]  // Sand Beige (Brown)
-    ]
+    combos: MASTER_PANTS
   },
   olive: {
     id: 'olive',
     name: 'Olive / Army Green',
     hex: '#556B2F',
-    combos: [
-      MASTER_PANTS[6], // Desert Khaki (Brown)
-      MASTER_PANTS[15], // Tan Corduroy (Brown)
-      MASTER_PANTS[16], // Sand Camel (Brown)
-      MASTER_PANTS[1], // Washed Black (Black)
-      MASTER_PANTS[4], // Cream Linen (Cream)
-      MASTER_PANTS[11], // Washed Charcoal (Black)
-      MASTER_PANTS[18], // Black Contrast Stitch (Black)
-      MASTER_PANTS[20], // Ecru Seam (Cream)
-      MASTER_PANTS[23], // Chocolate Brown (Brown)
-      MASTER_PANTS[24]  // Sand Beige (Brown)
-    ]
+    combos: MASTER_PANTS
   },
   maroon: {
     id: 'maroon',
     name: 'Maroon / Burgundy',
     hex: '#721C24',
-    combos: [
-      MASTER_PANTS[5], // Mid Indigo (Blue)
-      MASTER_PANTS[6], // Desert Khaki (Brown)
-      MASTER_PANTS[15], // Tan Corduroy (Brown)
-      MASTER_PANTS[16], // Sand Camel (Brown)
-      MASTER_PANTS[1], // Washed Black (Black)
-      MASTER_PANTS[7], // Jet Black (Black)
-      MASTER_PANTS[11], // Washed Charcoal (Black)
-      MASTER_PANTS[18], // Black Contrast Stitch (Black)
-      MASTER_PANTS[20], // Ecru Seam (Cream)
-      MASTER_PANTS[24]  // Sand Beige (Brown)
-    ]
+    combos: MASTER_PANTS
   }
 };
 
@@ -1087,8 +1012,21 @@ function handleImageUpload(file) {
       elements.imageControls.classList.remove('hidden');
       elements.detectedColorLabel.textContent = `Detected: ${SHIRT_COLORS_DATA[detectedKey]?.name || 'Shirt Color'}`;
 
-      // Update active selection to detected color
+      // Reset active color filter to 'all' so all 25 pants are immediately visible
+      state.activeColorFilter = 'all';
+      if (elements.pantColorFilter) {
+        elements.pantColorFilter.querySelectorAll('.filter-btn').forEach(btn => {
+          btn.classList.toggle('active', btn.getAttribute('data-color-filter') === 'all');
+        });
+      }
+
+      // Update active selection to detected color and render all pants
       updateShirtSelection(detectedKey);
+
+      // Reset scroll position to top/left so user sees full pants collection
+      if (elements.combosListContainer) {
+        elements.combosListContainer.scrollLeft = 0;
+      }
     };
     img.src = imgSrc;
   };
