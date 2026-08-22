@@ -918,10 +918,10 @@ function downloadOutfitLookbook() {
 
   // 2. Pure Visual Combined Outfit Frame (3/4 Shirt + 3/4 Pant)
   const frameX = 65;
-  const frameY = 65;
+  const frameY = 55;
   const frameW = width - 130;
-  const shirtH = 630; // 3/4 Shirt Height
-  const pantH = 640;  // 3/4 Pant Height
+  const shirtH = 595; // 3/4 Shirt Height
+  const pantH = 615;  // 3/4 Pant Height
   const totalFrameH = shirtH + pantH;
 
   // Dark studio backdrop inside outfit frame
@@ -953,6 +953,41 @@ function downloadOutfitLookbook() {
   ctx.lineWidth = 4;
   ctx.strokeStyle = 'rgba(255, 255, 255, 0.95)';
   ctx.stroke();
+  ctx.restore();
+
+  // 3. Watermark Badge at the end of the picture (@vedhuu_u)
+  ctx.save();
+  const watermarkText = 'Choose Your Tenue  •  @vedhuu_u';
+  ctx.font = 'bold 22px "Plus Jakarta Sans", -apple-system, sans-serif';
+  const textMetrics = ctx.measureText(watermarkText);
+  const badgeW = textMetrics.width + 48;
+  const badgeH = 44;
+  const badgeX = (width - badgeW) / 2;
+  const badgeY = frameY + totalFrameH + 24;
+
+  // Frosted Glass Pill for Watermark
+  drawRoundedRect(ctx, badgeX, badgeY, badgeW, badgeH, 22);
+  ctx.fillStyle = 'rgba(255, 255, 255, 0.94)';
+  ctx.fill();
+  ctx.lineWidth = 1.5;
+  ctx.strokeStyle = 'rgba(139, 92, 246, 0.45)';
+  ctx.stroke();
+
+  // Watermark text
+  ctx.fillStyle = '#6D28D9';
+  ctx.textAlign = 'center';
+  ctx.textBaseline = 'middle';
+  ctx.fillText(watermarkText, width / 2, badgeY + badgeH / 2);
+  ctx.restore();
+
+  // Corner Watermark inside bottom-right of outfit frame
+  ctx.save();
+  ctx.font = 'bold 18px "Plus Jakarta Sans", sans-serif';
+  ctx.fillStyle = 'rgba(255, 255, 255, 0.75)';
+  ctx.shadowColor = 'rgba(0, 0, 0, 0.75)';
+  ctx.shadowBlur = 8;
+  ctx.textAlign = 'right';
+  ctx.fillText('@vedhuu_u', frameX + frameW - 20, frameY + totalFrameH - 18);
   ctx.restore();
 
   // 3. Trigger Instant Image Download
