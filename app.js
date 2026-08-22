@@ -620,7 +620,17 @@ const elements = {
   vaultTableBody: document.getElementById('vaultTableBody'),
   exportCsvBtn: document.getElementById('exportCsvBtn'),
   clearVaultBtn: document.getElementById('clearVaultBtn'),
-  lockVaultBtn: document.getElementById('lockVaultBtn')
+  lockVaultBtn: document.getElementById('lockVaultBtn'),
+
+  // All Pants PDF Lookbook Modal
+  allPantsPdfModal: document.getElementById('allPantsPdfModal'),
+  openCatalogPdfBtn: document.getElementById('openCatalogPdfBtn'),
+  openDisclaimerCatalogPdfBtn: document.getElementById('openDisclaimerCatalogPdfBtn'),
+  closeCatalogPdfBtn: document.getElementById('closeCatalogPdfBtn'),
+  printCatalogPdfBtn: document.getElementById('printCatalogPdfBtn'),
+  printCatalogPdfBottomBtn: document.getElementById('printCatalogPdfBottomBtn'),
+  catalogPantsGrid: document.getElementById('catalogPantsGrid'),
+  catalogModalFilterBar: document.getElementById('catalogModalFilterBar')
 };
 
 // ========================================================
@@ -868,6 +878,80 @@ function renderPantVisualizer(combo) {
   if (elements.visualizerPantRealImg) {
     elements.visualizerPantRealImg.src = imgSrc;
   }
+}
+
+// ========================================================
+// ALL PANTS PDF LOOKBOOK & CATALOG ENGINE
+// ========================================================
+let currentCatalogFilter = 'all';
+
+function renderCatalogPants(filter = 'all') {
+  if (!elements.catalogPantsGrid) return;
+  
+  currentCatalogFilter = filter;
+  const pants = MASTER_PANTS.filter(p => {
+    if (filter === 'all') return true;
+    return p.colorFamily === filter;
+  });
+
+  elements.catalogPantsGrid.innerHTML = '';
+
+  pants.forEach(pant => {
+    const card = document.createElement('div');
+    card.className = 'catalog-pant-card';
+    const tagClass = pant.tagClass || 'tag-blue';
+    const imgSrc = pant.image || 'images/pant_page_1.jpg';
+
+    card.innerHTML = `
+      <div class="catalog-pant-thumb-box">
+        <img src="${imgSrc}" alt="${pant.pantName}" class="catalog-pant-thumb-img">
+        <span class="catalog-pant-color-dot" style="background: ${pant.hex};" title="${pant.colorName}"></span>
+      </div>
+      <div class="catalog-pant-body">
+        <div class="pant-tag-row">
+          <span class="category-tag ${tagClass}">${pant.styleTag || pant.colorName}</span>
+          <span style="font-size: 0.72rem; color: #64748B;">${pant.hex}</span>
+        </div>
+        <h4 class="catalog-pant-card-title">${pant.pantName}</h4>
+        <p class="catalog-pant-card-desc">${pant.desc}</p>
+        <div class="catalog-pant-meta-list">
+          <div><strong>Fit:</strong> ${pant.fitType || 'Relaxed Fit'}</div>
+          <div><strong>Fabric:</strong> ${pant.fabric || 'Premium Quality'}</div>
+          <div><strong>Shoes:</strong> ${pant.shoes || 'Sneakers / Loafers'}</div>
+        </div>
+      </div>
+    `;
+
+    elements.catalogPantsGrid.appendChild(card);
+  });
+}
+
+function openCatalogModal() {
+  if (elements.allPantsPdfModal) {
+    elements.allPantsPdfModal.classList.remove('hidden');
+    elements.allPantsPdfModal.setAttribute('aria-hidden', 'false');
+    renderCatalogPants(currentCatalogFilter);
+  }
+}
+
+function closeCatalogModal() {
+  if (elements.allPantsPdfModal) {
+    elements.allPantsPdfModal.classList.add('hidden');
+    elements.allPantsPdfModal.setAttribute('aria-hidden', 'true');
+  }
+}
+
+function printCatalogAsPdf() {
+  // Ensure all 25 pants are displayed for full PDF export
+  renderCatalogPants('all');
+  if (elements.catalogModalFilterBar) {
+    elements.catalogModalFilterBar.querySelectorAll('.catalog-filter-tab').forEach(b => {
+      b.classList.toggle('active', b.getAttribute('data-cat-filter') === 'all');
+    });
+  }
+  setTimeout(() => {
+    window.print();
+  }, 150);
 }
 
 // ========================================================
@@ -1210,6 +1294,44 @@ function bindEvents() {
       const x = e.pageX - elements.combosListContainer.offsetLeft;
       const walk = (x - startX) * 1.5;
       elements.combosListContainer.scrollLeft = scrollLeft - walk;
+    });
+  }
+
+  // All Pants PDF Lookbook Modal Controls
+  if (elements.openCatalogPdfBtn) {
+    elements.openCatalogPdfBtn.addEventListener('click', openCatalogModal);
+  }
+  if (elements.openDisclaimerCatalogPdfBtn) {
+    elements.openDisclaimerCatalogPdfBtn.addEventListener('click', openCatalogModal);
+  }
+  if (elements.closeCatalogPdfBtn) {
+    elements.closeCatalogPdfBtn.addEventListener('click', closeCatalogModal);
+  }
+  if (elements.printCatalogPdfBtn) {
+    elements.printCatalogPdfBtn.addEventListener('click', printCatalogAsPdf);
+  }
+  if (elements.printCatalogPdfBottomBtn) {
+    elements.printCatalogPdfBottomBtn.addEventListener('click', printCatalogAsPdf);
+  }
+  if (elements.allPantsPdfModal) {
+    elements.allPantsPdfModal.addEventListener('click', (e) => {
+      if (e.target === elements.allPantsPdfModal) {
+        closeCatalogModal();
+      }
+    });
+  }
+
+  // Filter Tabs inside Catalog Lookbook Modal
+  if (elements.catalogModalFilterBar) {
+    elements.catalogModalFilterBar.addEventListener('click', (e) => {
+      const tab = e.target.closest('.catalog-filter-tab');
+      if (!tab) return;
+
+      elements.catalogModalFilterBar.querySelectorAll('.catalog-filter-tab').forEach(t => t.classList.remove('active'));
+      tab.classList.add('active');
+
+      const filter = tab.getAttribute('data-cat-filter');
+      renderCatalogPants(filter);
     });
   }
 
