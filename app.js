@@ -587,39 +587,66 @@ function saveUser(name, age) {
 // Paste your Google Apps Script Web App URL below to sync all worldwide visitors:
 const GOOGLE_SHEET_API_URL = ''; // e.g. 'https://script.google.com/macros/s/.../exec'
 
+function getDeviceType() {
+  const ua = navigator.userAgent;
+  if (/(tablet|ipad|playbook|silk)|(android(?!.*mobi))/i.test(ua)) {
+    return 'Tablet';
+  }
+  if (/Mobile|iP(hone|od)|Android|BlackBerry|IEMobile|Kindle|Silk-Accelerated|(hpw|web)OS|Opera M(obi|ini)/i.test(ua)) {
+    return 'Mobile';
+  }
+  return 'Desktop';
+}
+
 // Record User into Private Creator Vault & Sync to Google Sheet
-function recordUserInVault(name, age) {
+function recordUserInVault(name, age, action = 'login') {
+  if (!name || name.trim() === '') return;
+  
   try {
     let vault = JSON.parse(localStorage.getItem('huestyle_users_vault') || '[]');
     const now = new Date().toISOString();
-    const existingIndex = vault.findIndex(u => u.name.toLowerCase() === name.toLowerCase());
+    const cleanName = name.trim();
+    const userAge = parseInt(age, 10) || 20;
+    const device = getDeviceType();
+
+    const existingIndex = vault.findIndex(u => u.name.toLowerCase() === cleanName.toLowerCase());
 
     if (existingIndex !== -1) {
-      vault[existingIndex].age = age;
+      vault[existingIndex].age = userAge;
       vault[existingIndex].lastLogin = now;
-      vault[existingIndex].loginCount = (vault[existingIndex].loginCount || 1) + 1;
+      vault[existingIndex].device = device;
+      if (action === 'login') {
+        vault[existingIndex].loginCount = (vault[existingIndex].loginCount || 1) + 1;
+      } else if (action === 'download_lookbook') {
+        vault[existingIndex].lookbooksDownloaded = (vault[existingIndex].lookbooksDownloaded || 0) + 1;
+      } else if (action === 'upload_shirt') {
+        vault[existingIndex].shirtsUploaded = (vault[existingIndex].shirtsUploaded || 0) + 1;
+      }
     } else {
       vault.push({
-        id: 'usr_' + Date.now(),
-        name: name,
-        age: age,
+        id: 'usr_' + Date.now() + '_' + Math.random().toString(36).substr(2, 4),
+        name: cleanName,
+        age: userAge,
+        device: device,
         createdAt: now,
         lastLogin: now,
-        loginCount: 1
+        loginCount: 1,
+        lookbooksDownloaded: action === 'download_lookbook' ? 1 : 0,
+        shirtsUploaded: action === 'upload_shirt' ? 1 : 0
       });
     }
 
     localStorage.setItem('huestyle_users_vault', JSON.stringify(vault));
 
     // Live Sync to Google Sheets Cloud Database
-    syncToGoogleSheet(name, age, now);
+    syncToGoogleSheet(cleanName, userAge, now, action, device);
   } catch (e) {
     console.error('Could not record user into vault:', e);
   }
 }
 
 // Send Visitor Data to Google Sheet
-function syncToGoogleSheet(name, age, timestamp) {
+function syncToGoogleSheet(name, age, timestamp, action = 'login', device = 'Desktop') {
   if (!GOOGLE_SHEET_API_URL || GOOGLE_SHEET_API_URL.trim() === '') {
     return; // Google Sheet URL not configured yet
   }
@@ -634,8 +661,10 @@ function syncToGoogleSheet(name, age, timestamp) {
       body: JSON.stringify({
         name: name,
         age: age,
+        action: action,
+        device: device,
         timestamp: timestamp || new Date().toLocaleString(),
-        device: window.innerWidth <= 768 ? 'Mobile' : 'Desktop'
+        screen: `${window.innerWidth}x${window.innerHeight}`
       })
     }).catch(err => console.log('Google sheet sync background notice:', err));
   } catch (err) {
@@ -910,6 +939,9 @@ function downloadOutfitLookbook() {
       elements.downloadBtnText.textContent = '✓ Lookbook Saved!';
       elements.downloadLookbookBtn.classList.add('download-success');
 
+      // Record Lookbook Download Action in Creator Vault
+      recordUserInVault(state.user.name || 'Anonymous User', state.user.age || 20, 'download_lookbook');
+
       setTimeout(() => {
         elements.downloadBtnText.textContent = 'Download Outfit Lookbook';
         elements.downloadLookbookBtn.classList.remove('download-success');
@@ -1002,6 +1034,9 @@ function handleImageUpload(file) {
 
       // Update active selection to detected color and render all pants
       updateShirtSelection(detectedKey);
+
+      // Record Shirt Upload Action in Creator Vault
+      recordUserInVault(state.user.name || 'Anonymous User', state.user.age || 20, 'upload_shirt');
 
       // Reset scroll position to top/left so user sees full pants collection
       if (elements.combosListContainer) {
@@ -1552,7 +1587,7 @@ function renderVaultTable(searchQuery = '') {
   if (filtered.length === 0) {
     elements.vaultTableBody.innerHTML = `
       <tr>
-        <td colspan="6" style="text-align:center; padding: 2rem; color: #64748B;">
+        <td colspan="8" style="text-align:center; padding: 2rem; color: #64748B;">
           ${users.length === 0 ? 'No user data registered yet.' : 'No users match your search query.'}
         </td>
       </tr>
@@ -1564,13 +1599,16 @@ function renderVaultTable(searchQuery = '') {
     const row = document.createElement('tr');
     const createdDate = user.createdAt ? new Date(user.createdAt).toLocaleDateString() : 'Recent';
     const lastLogin = user.lastLogin ? new Date(user.lastLogin).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }) : 'Active';
+    const deviceTag = user.device === 'Mobile' ? '📱 Mobile' : user.device === 'Tablet' ? '📟 Tablet' : '💻 Desktop';
 
     row.innerHTML = `
       <td><strong>${index + 1}</strong></td>
       <td><strong>${user.name}</strong></td>
       <td><span class="user-age-pill">${user.age}</span></td>
+      <td><span style="font-size:0.75rem; color:#475569;">${deviceTag}</span></td>
       <td>${createdDate}</td>
       <td>${lastLogin}</td>
+      <td><span style="color:#059669; font-weight:700;">${user.lookbooksDownloaded || 0}</span></td>
       <td><strong>${user.loginCount || 1}</strong></td>
     `;
     elements.vaultTableBody.appendChild(row);
@@ -1584,15 +1622,17 @@ function exportVaultToCsv() {
     return;
   }
 
-  let csvContent = 'data:text/csv;charset=utf-8,ID,Name,Age,First_Joined,Last_Login,Total_Visits\n';
+  let csvContent = 'data:text/csv;charset=utf-8,ID,Name,Age,Device,First_Joined,Last_Active,Lookbooks_Downloaded,Total_Visits\n';
 
   users.forEach(u => {
     const row = [
       `"${u.id || ''}"`,
       `"${u.name || ''}"`,
       u.age || '',
+      `"${u.device || 'Desktop'}"`,
       `"${u.createdAt || ''}"`,
       `"${u.lastLogin || ''}"`,
+      u.lookbooksDownloaded || 0,
       u.loginCount || 1
     ].join(',');
     csvContent += row + '\n';
