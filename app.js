@@ -842,16 +842,11 @@ function renderCombosList() {
       </button>
     `;
 
-    // Click to select & pair pant
+    // Click to select & pair pant seamlessly without jarring jumps
     item.addEventListener('click', () => {
       state.selectedPantCombo = combo;
       renderPantVisualizer(combo);
       renderCombosList();
-
-      // On mobile screens, auto-scroll to the lookbook smoothly
-      if (window.innerWidth <= 1040) {
-        elements.lookbookPreviewCard.scrollIntoView({ behavior: 'smooth', block: 'start' });
-      }
     });
 
     elements.combosListContainer.appendChild(item);
@@ -1255,6 +1250,12 @@ function bindEvents() {
   elements.scrollToTopBtn.addEventListener('click', () => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   });
+
+  // Mobile Floating Quick Download Button
+  const mobileDownloadFloatBtn = document.getElementById('mobileDownloadFloatBtn');
+  if (mobileDownloadFloatBtn) {
+    mobileDownloadFloatBtn.addEventListener('click', downloadOutfitLookbook);
+  }
 
   // Global Button Click Ripple & Elastic Bounce Animation Handler
   document.addEventListener('click', (e) => {

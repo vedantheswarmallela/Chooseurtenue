@@ -864,32 +864,32 @@ button {
   width: 100%;
 }
 
-/* Download Lookbook Button */
+/* Download Lookbook Button (Large Easy Tap) */
 .btn-download-lookbook {
   width: 100%;
-  padding: 0.85rem 1.25rem;
-  font-size: clamp(0.86rem, 2vw, 0.92rem);
-  font-weight: 700;
+  padding: 0.95rem 1.45rem;
+  font-size: clamp(0.92rem, 2.2vw, 1.02rem);
+  font-weight: 800;
   letter-spacing: 0.3px;
   border-radius: var(--radius-md);
-  margin-top: 0.2rem;
-  gap: 0.55rem;
-  background: linear-gradient(135deg, rgba(124, 58, 237, 0.92) 0%, rgba(109, 40, 217, 0.96) 100%);
-  border: 1.5px solid rgba(255, 255, 255, 0.5);
-  box-shadow: 0 8px 24px rgba(109, 40, 217, 0.35), var(--glass-inset);
-  min-height: 48px;
+  margin-top: 0.35rem;
+  gap: 0.65rem;
+  background: linear-gradient(135deg, rgba(124, 58, 237, 0.96) 0%, rgba(109, 40, 217, 0.98) 100%);
+  border: 2px solid rgba(255, 255, 255, 0.65);
+  box-shadow: 0 10px 28px rgba(109, 40, 217, 0.42), var(--glass-inset);
+  min-height: 52px;
 }
 
 .btn-download-lookbook:hover, .btn-download-lookbook:active {
   background: linear-gradient(135deg, rgba(139, 92, 246, 0.98) 0%, rgba(124, 58, 237, 0.98) 100%);
   transform: translateY(-2px);
-  box-shadow: 0 12px 30px rgba(109, 40, 217, 0.45);
+  box-shadow: 0 14px 35px rgba(109, 40, 217, 0.55);
 }
 
 .btn-download-lookbook.download-success {
   background: linear-gradient(135deg, #059669 0%, #10B981 100%);
-  border-color: rgba(255, 255, 255, 0.8);
-  box-shadow: 0 8px 24px rgba(16, 185, 129, 0.4);
+  border-color: rgba(255, 255, 255, 0.9);
+  box-shadow: 0 10px 28px rgba(16, 185, 129, 0.5);
 }
 
 /* ========================================================
@@ -1506,6 +1506,23 @@ button {
   border-color: #8B5CF6;
   transform: translateY(-3px) scale(1.05);
   box-shadow: 0 14px 35px rgba(139, 92, 246, 0.45);
+}
+
+.btn-mobile-quick-download {
+  background: var(--primary-gradient) !important;
+  color: #FFFFFF !important;
+  border: 1.5px solid rgba(255, 255, 255, 0.75) !important;
+  font-size: 0.88rem !important;
+  font-weight: 800 !important;
+  padding: 0.65rem 1.15rem !important;
+  box-shadow: 0 10px 28px rgba(109, 40, 217, 0.45), var(--glass-inset) !important;
+  min-height: 46px !important;
+}
+
+.btn-mobile-quick-download:hover, .btn-mobile-quick-download:active {
+  background: linear-gradient(135deg, #7C3AED 0%, #6D28D9 100%) !important;
+  transform: translateY(-3px) scale(1.06) !important;
+  box-shadow: 0 14px 35px rgba(109, 40, 217, 0.6) !important;
 }
 
 .mobile-only {
