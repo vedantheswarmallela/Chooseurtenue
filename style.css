@@ -1135,6 +1135,41 @@ button {
   flex-direction: column;
   gap: 0.95rem;
   padding: clamp(1.2rem, 2.5vw, 1.75rem);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.outfit-display-card.lookbook-update-pulse {
+  animation: lookbookGlow 0.85s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+@keyframes lookbookGlow {
+  0% {
+    transform: scale(0.985);
+    box-shadow: 0 0 0 0 rgba(139, 92, 246, 0.6), 0 20px 45px rgba(109, 40, 217, 0.4);
+  }
+  50% {
+    transform: scale(1.018);
+    box-shadow: 0 0 0 8px rgba(139, 92, 246, 0.35), 0 25px 60px rgba(109, 40, 217, 0.55);
+  }
+  100% {
+    transform: scale(1);
+    box-shadow: var(--glass-shadow), var(--glass-inset);
+  }
+}
+
+.big-pant-img.pant-switch-fade {
+  animation: pantFadeSlide 0.35s ease-out;
+}
+
+@keyframes pantFadeSlide {
+  0% {
+    opacity: 0.4;
+    transform: translateY(8px) scale(0.98);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
 }
 
 /* Unified Crystal Glass Lookbook Frame */

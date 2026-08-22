@@ -764,10 +764,10 @@ function renderCombosList() {
       </button>
     `;
 
-    // Click to select & pair pant seamlessly without jarring jumps or scroll resets
+    // Click to select & pair pant seamlessly and automatically display Lookbook
     item.addEventListener('click', () => {
       state.selectedPantCombo = combo;
-      renderPantVisualizer(combo);
+      renderPantVisualizer(combo, true); // true = scroll to lookbook
       
       // Update selected states cleanly in DOM
       const allItems = elements.combosListContainer.querySelectorAll('.combo-item');
@@ -785,13 +785,33 @@ function renderCombosList() {
   });
 }
 
-function renderPantVisualizer(combo) {
+function renderPantVisualizer(combo, autoScroll = false) {
   if (!combo) return;
 
-  // Update 3/4 Real Pant Photo seamlessly below the shirt
+  // 1. Update 3/4 Real Pant Photo seamlessly below the shirt
   const imgSrc = combo.image || 'images/pant_page_1.jpg';
   if (elements.visualizerPantRealImg) {
+    elements.visualizerPantRealImg.classList.remove('pant-switch-fade');
+    void elements.visualizerPantRealImg.offsetWidth; // Force reflow
     elements.visualizerPantRealImg.src = imgSrc;
+    elements.visualizerPantRealImg.classList.add('pant-switch-fade');
+  }
+
+  // 2. Pulse Lookbook Card with elegant glow
+  if (elements.lookbookPreviewCard) {
+    elements.lookbookPreviewCard.classList.remove('lookbook-update-pulse');
+    void elements.lookbookPreviewCard.offsetWidth; // Force reflow
+    elements.lookbookPreviewCard.classList.add('lookbook-update-pulse');
+
+    // 3. Automatically show & smoothly scroll to Lookbook
+    if (autoScroll) {
+      setTimeout(() => {
+        elements.lookbookPreviewCard.scrollIntoView({
+          behavior: 'smooth',
+          block: window.innerWidth <= 1040 ? 'start' : 'nearest'
+        });
+      }, 50);
+    }
   }
 }
 
