@@ -1704,39 +1704,43 @@ button {
 }
 
 /* ========================================================
-   DISCLAIMER & CREATOR CREDITS SECTION (COMPACT SMALL FONT)
+   DISCLAIMER & CREATOR CREDITS SECTION (MICRO FONT AT BOTTOM)
    ======================================================== */
 .disclaimer-section {
-  margin-top: clamp(1.8rem, 4vw, 2.5rem);
+  margin-top: clamp(2.5rem, 5vw, 4rem);
+  margin-bottom: 1.5rem;
 }
 
 .disclaimer-card {
-  padding: 1.15rem 1.45rem;
+  padding: 0.85rem 1.25rem;
   border-radius: var(--radius-md);
-  border-color: rgba(196, 181, 253, 0.65);
-  background: rgba(255, 255, 255, 0.45);
+  border: 1px solid rgba(196, 181, 253, 0.4);
+  background: rgba(255, 255, 255, 0.4);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
 }
 
 .disclaimer-header {
-  margin-bottom: 0.45rem;
+  margin-bottom: 0.25rem;
 }
 
 .disclaimer-badge {
   display: inline-block;
   font-family: 'Outfit', sans-serif;
-  font-size: 0.62rem;
+  font-size: 0.56rem;
   font-weight: 800;
   text-transform: uppercase;
-  letter-spacing: 0.5px;
+  letter-spacing: 0.4px;
   color: #6D28D9;
-  padding: 0.12rem 0.55rem;
+  padding: 0.1rem 0.45rem;
   border-radius: var(--radius-full);
-  margin-bottom: 0.25rem;
+  margin-bottom: 0.15rem;
+  background: rgba(237, 233, 254, 0.7);
 }
 
 .disclaimer-title {
   font-family: 'Syne', sans-serif;
-  font-size: 0.95rem;
+  font-size: 0.82rem;
   font-weight: 700;
   color: var(--text-main);
 }
@@ -1748,27 +1752,28 @@ button {
 }
 
 .disclaimer-text {
-  font-size: 0.76rem;
-  color: var(--text-muted);
-  line-height: 1.5;
-  margin-bottom: 0.75rem;
+  font-size: 0.68rem;
+  color: #64748B;
+  line-height: 1.42;
+  margin-bottom: 0.55rem;
 }
 
 .disclaimer-pills-row {
   display: flex;
   flex-wrap: wrap;
-  gap: 0.45rem;
+  align-items: center;
+  gap: 0.35rem;
 }
 
 .disclaimer-pill {
   font-family: 'Outfit', sans-serif;
-  font-size: 0.68rem;
+  font-size: 0.62rem;
   font-weight: 600;
   color: #6D28D9;
-  padding: 0.22rem 0.65rem;
+  padding: 0.15rem 0.5rem;
   border-radius: var(--radius-full);
-  border: 1px solid rgba(139, 92, 246, 0.25);
-  background: rgba(255, 255, 255, 0.6);
+  border: 1px solid rgba(139, 92, 246, 0.2);
+  background: rgba(255, 255, 255, 0.65);
 }
 
 .disclaimer-link-pill {
@@ -1781,19 +1786,18 @@ button {
   color: #FFFFFF;
   border-color: #8B5CF6;
   transform: translateY(-1px);
-  box-shadow: 0 3px 10px rgba(139, 92, 246, 0.25);
+  box-shadow: 0 2px 8px rgba(139, 92, 246, 0.2);
 }
 
-/* ========================================================
 /* Dedicated Vault Button in Disclaimer */
 .footer-vault-btn {
   font-family: 'Outfit', sans-serif;
-  font-size: 0.68rem;
+  font-size: 0.62rem;
   font-weight: 700;
   color: #6D28D9;
-  padding: 0.22rem 0.65rem;
+  padding: 0.15rem 0.5rem;
   border-radius: var(--radius-full);
-  border: 1px solid rgba(139, 92, 246, 0.3);
+  border: 1px solid rgba(139, 92, 246, 0.25);
   background: rgba(255, 255, 255, 0.7);
   opacity: 0.85;
   cursor: pointer;
@@ -1801,7 +1805,7 @@ button {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  gap: 0.25rem;
+  gap: 0.2rem;
 }
 
 .footer-vault-btn:hover, .footer-vault-btn:active {
@@ -1810,7 +1814,7 @@ button {
   color: #FFFFFF;
   border-color: #8B5CF6;
   transform: translateY(-1px);
-  box-shadow: 0 3px 10px rgba(139, 92, 246, 0.25);
+  box-shadow: 0 2px 8px rgba(139, 92, 246, 0.2);
 }
 
 .btn-floating-vault-discreet {
