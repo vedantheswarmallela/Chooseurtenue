@@ -839,11 +839,21 @@ function renderCombosList() {
       </button>
     `;
 
-    // Click to select & pair pant seamlessly without jarring jumps
+    // Click to select & pair pant seamlessly without jarring jumps or scroll resets
     item.addEventListener('click', () => {
       state.selectedPantCombo = combo;
       renderPantVisualizer(combo);
-      renderCombosList();
+      
+      // Update selected states cleanly in DOM
+      const allItems = elements.combosListContainer.querySelectorAll('.combo-item');
+      allItems.forEach(el => {
+        el.classList.remove('selected');
+        const btn = el.querySelector('.combo-action-btn');
+        if (btn) btn.textContent = 'Select';
+      });
+      item.classList.add('selected');
+      const actionBtn = item.querySelector('.combo-action-btn');
+      if (actionBtn) actionBtn.textContent = '✓ Paired';
     });
 
     elements.combosListContainer.appendChild(item);
@@ -1167,7 +1177,41 @@ function bindEvents() {
 
     state.activeColorFilter = btn.getAttribute('data-color-filter');
     renderCombosList();
+    if (elements.combosListContainer) {
+      elements.combosListContainer.scrollTo({ left: 0, behavior: 'smooth' });
+    }
   });
+
+  // Mouse Drag-to-Scroll Support for Horizontal Pants Carousel
+  if (elements.combosListContainer) {
+    let isDown = false;
+    let startX = 0;
+    let scrollLeft = 0;
+
+    elements.combosListContainer.addEventListener('mousedown', (e) => {
+      // Don't drag if clicking an action button directly
+      if (e.target.closest('button')) return;
+      isDown = true;
+      startX = e.pageX - elements.combosListContainer.offsetLeft;
+      scrollLeft = elements.combosListContainer.scrollLeft;
+    });
+
+    elements.combosListContainer.addEventListener('mouseleave', () => {
+      isDown = false;
+    });
+
+    elements.combosListContainer.addEventListener('mouseup', () => {
+      isDown = false;
+    });
+
+    elements.combosListContainer.addEventListener('mousemove', (e) => {
+      if (!isDown) return;
+      e.preventDefault();
+      const x = e.pageX - elements.combosListContainer.offsetLeft;
+      const walk = (x - startX) * 1.5;
+      elements.combosListContainer.scrollLeft = scrollLeft - walk;
+    });
+  }
 
   // Download Lookbook Button (Main Visualizer & Below Combos List)
   elements.downloadLookbookBtn.addEventListener('click', downloadOutfitLookbook);
