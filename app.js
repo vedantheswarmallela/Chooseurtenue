@@ -515,7 +515,6 @@ const elements = {
 
   // Right Pane (Combos & Counts)
   combosCard: document.getElementById('combosCard'),
-  personalizedAgeTip: document.getElementById('personalizedAgeTip'),
   pantColorFilter: document.getElementById('pantColorFilter'),
   combosListContainer: document.getElementById('combosListContainer'),
   countAll: document.getElementById('countAll'),
@@ -652,7 +651,6 @@ function showStudio() {
   elements.displayUserName.textContent = state.user.name;
   elements.displayUserAge.textContent = `Age ${state.user.age}`;
 
-  updateAgeStylingTip();
   updateShirtSelection(state.currentShirtKey);
 }
 
@@ -667,24 +665,6 @@ function handleLogout() {
   elements.loginSection.classList.remove('hidden');
   elements.userNameInput.value = '';
   elements.userAgeInput.value = '';
-}
-
-// Age-based styling customized advice
-function updateAgeStylingTip() {
-  const age = state.user.age || 22;
-  let tipText = '';
-
-  if (age <= 22) {
-    tipText = `Hey ${state.user.name}! At age ${age}, Light Blue Washed Jeans, Washed Charcoal Black, and Desert Tan Cargo are trending choices.`;
-  } else if (age <= 30) {
-    tipText = `Looking sharp, ${state.user.name}! At age ${age}, Mid Indigo Denim, Earthy Olive Green, and Off-White Cream give effortless style.`;
-  } else if (age <= 45) {
-    tipText = `Distinguished look, ${state.user.name}! At age ${age}, Jet Black Slacks, Cream Linen, and Deep Indigo Denim stand out.`;
-  } else {
-    tipText = `Timeless elegance, ${state.user.name}! Classic Black Trousers, Cream Linen slacks, and refined Tan Corduroy offer sophisticated harmony.`;
-  }
-
-  elements.personalizedAgeTip.textContent = tipText;
 }
 
 // ========================================================

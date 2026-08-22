@@ -1314,23 +1314,6 @@ button {
   box-shadow: 0 8px 25px var(--accent-glow), var(--glass-inset);
 }
 
-/* Age Tip Banner */
-.age-tip-banner {
-  display: flex;
-  align-items: center;
-  gap: 0.65rem;
-  background: rgba(237, 233, 254, 0.75);
-  border-color: rgba(196, 181, 253, 0.75);
-  font-size: clamp(0.82rem, 1.8vw, 0.88rem);
-  color: #5B21B6;
-  font-weight: 600;
-}
-
-.banner-icon {
-  font-size: 1.2rem;
-  flex-shrink: 0;
-}
-
 /* Combos List Cards with Frosted Glass */
 .combos-list {
   display: grid;
