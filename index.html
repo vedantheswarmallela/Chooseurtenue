@@ -284,7 +284,9 @@
 
         <div class="footer-bottom-row">
           <p class="footer-copyright">© 2026 Choose Your Tenue by Mallela Vedantheswar. All rights reserved.</p>
-          <button type="button" class="btn-subtle-vault" id="openVaultFooterBtn" title="Creator Access">🔒</button>
+          <button type="button" class="footer-vault-btn glass-chip-ultra" id="openVaultFooterBtn" title="Creator Data Vault">
+            <span>🔒 Vault</span>
+          </button>
         </div>
       </div>
     </footer>
@@ -309,13 +311,13 @@
       <!-- PIN AUTHENTICATION GATE -->
       <div id="vaultAuthSection" class="vault-auth-box glass-card-inner-ultra">
         <div class="vault-lock-icon">🔐</div>
-        <h4>Enter Creator PIN</h4>
-        <p>Enter your private PIN to view registered users data</p>
+        <h4>Enter Creator Password</h4>
+        <p>Enter your private password to view registered users data</p>
         <form id="vaultAuthForm" class="vault-pin-form">
-          <input type="password" id="vaultPinInput" placeholder="Enter PIN (e.g. vedhu)" required class="glass-input-ultra pin-input">
+          <input type="password" id="vaultPinInput" placeholder="Enter Password" required class="glass-input-ultra pin-input">
           <button type="submit" class="btn btn-primary glass-btn-primary">Unlock Vault</button>
         </form>
-        <p id="vaultAuthError" class="vault-error-msg hidden">Incorrect PIN. Access denied.</p>
+        <p id="vaultAuthError" class="vault-error-msg hidden">Incorrect Password. Access denied.</p>
       </div>
 
       <!-- UNLOCKED CREATOR DATA DASHBOARD -->
