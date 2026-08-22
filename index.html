@@ -1,0 +1,397 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
+  <meta name="theme-color" content="#F5F3FF">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  <title>Choose Your Tenue • by Mallela Vedantheswar (@vedhuu_u)</title>
+  <link rel="icon" type="image/png" href="images/logo.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Syne:wght@600;700;800&family=Outfit:wght@500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <!-- DYNAMIC FLOATING GLASS REFRACTION ORBS & DISCS -->
+  <div class="glass-orb orb-lavender-1"></div>
+  <div class="glass-orb orb-lavender-2"></div>
+  <div class="glass-orb orb-lavender-3"></div>
+  <div class="glass-orb orb-lavender-4"></div>
+  <div class="glass-geometric glass-disc-1"></div>
+  <div class="glass-geometric glass-disc-2"></div>
+
+  <div class="app-container">
+    
+    <!-- HEADER (DESKTOP & MOBILE RESPONSIVE) -->
+    <header class="app-header glass-card-ultra">
+      <div class="glass-sheen"></div>
+      <div class="logo">
+        <div class="logo-img-wrapper glass-chip-ultra">
+          <img src="images/logo.png" alt="Choose Your Tenue Logo" class="brand-logo-img">
+        </div>
+        <div class="brand-text-container">
+          <h1 class="brand-title">Choose Your <span>Tenue</span></h1>
+          <p class="brand-tagline">Created by <strong>Mallela Vedantheswar</strong> • <a href="https://www.instagram.com/vedhuu_u?igsi=MW04eDJ3dDV0NHNpYw==" target="_blank" rel="noopener noreferrer" class="creator-tag">@vedhuu_u</a></p>
+        </div>
+      </div>
+
+      <div class="header-actions">
+        <!-- HOVER/TAP SUPPORT DROPDOWN (REVEALS INSTAGRAM & EMAIL) -->
+        <div class="support-dropdown-container" id="supportDropdown">
+          <button type="button" class="support-trigger-btn glass-chip-ultra" aria-haspopup="true" aria-expanded="false" id="supportBtn">
+            <span class="support-icon">✉️</span>
+            <span class="support-text">Support</span>
+            <svg class="dropdown-arrow" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M6 9l6 6 6-6"/></svg>
+          </button>
+
+          <!-- FROSTED GLASS SUPPORT POPOVER -->
+          <div class="support-glass-popover glass-card-ultra">
+            <div class="glass-sheen"></div>
+            <div class="popover-header">
+              <span class="popover-badge">Contact & Creator</span>
+              <h4>Need Outfit Help?</h4>
+              <p class="popover-sub">Connect with Mallela Vedantheswar via Instagram or Email</p>
+            </div>
+
+            <div class="popover-links-list">
+              <!-- INSTAGRAM -->
+              <a href="https://www.instagram.com/vedhuu_u?igsi=MW04eDJ3dDV0NHNpYw==" target="_blank" rel="noopener noreferrer" class="popover-link-card glass-card-inner-ultra">
+                <div class="link-icon-box ig-icon-bg">📸</div>
+                <div class="link-details">
+                  <span class="link-platform">Instagram Profile</span>
+                  <span class="link-handle">@vedhuu_u</span>
+                </div>
+                <span class="link-external-icon">↗</span>
+              </a>
+
+              <!-- EMAIL -->
+              <a href="mailto:vedantheswarmalleal104@gmail.com" class="popover-link-card glass-card-inner-ultra">
+                <div class="link-icon-box mail-icon-bg">✉️</div>
+                <div class="link-details">
+                  <span class="link-platform">Support Email</span>
+                  <span class="link-handle email-truncate">vedantheswarmalleal104@gmail.com</span>
+                </div>
+                <span class="link-external-icon">↗</span>
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <!-- USER PROFILE BADGE -->
+        <div id="userProfileBadge" class="user-badge glass-chip-ultra hidden">
+          <span class="avatar-icon">👤</span>
+          <div class="user-info">
+            <span id="displayUserName" class="user-name">Alex</span>
+            <span id="displayUserAge" class="user-age">Age 22</span>
+          </div>
+          <button id="logoutBtn" class="btn-logout" title="Change Profile">Change</button>
+        </div>
+      </div>
+    </header>
+
+    <!-- STEP 1: SIMPLE LOGIN (DESKTOP & MOBILE ADAPTIVE) -->
+    <section id="loginSection" class="card login-card glass-card-ultra active-section">
+      <div class="glass-sheen"></div>
+      <div class="card-header">
+        <div class="login-logo-wrapper glass-chip-ultra">
+          <img src="images/logo.png" alt="Choose Your Tenue Official Logo" class="login-logo-img">
+        </div>
+        <h2>Choose Your Tenue</h2>
+        <p class="login-subtext">Created by <strong>Mallela Vedantheswar</strong> • <a href="https://www.instagram.com/vedhuu_u?igsi=MW04eDJ3dDV0NHNpYw==" target="_blank" rel="noopener noreferrer" class="creator-badge">@vedhuu_u</a></p>
+        <p class="login-desc">Enter your details to discover real matching pants & jeans colors tailored to your shirt.</p>
+      </div>
+      
+      <form id="loginForm" class="login-form">
+        <div class="input-group">
+          <label for="userName">Your Name</label>
+          <input type="text" id="userName" placeholder="e.g. John, Alex, David" required autocomplete="name" class="glass-input-ultra">
+        </div>
+
+        <div class="input-group">
+          <label for="userAge">Your Age</label>
+          <input type="number" id="userAge" placeholder="e.g. 21" min="10" max="100" required class="glass-input-ultra">
+        </div>
+
+        <button type="submit" class="btn btn-primary btn-block glass-btn-primary">
+          <span>Explore Your Tenue</span>
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        </button>
+      </form>
+    </section>
+
+    <!-- STEP 2: SHIRT UPLOAD & RESULTS STUDIO -->
+    <main id="mainStudio" class="studio-container hidden">
+      
+      <!-- TOP INPUT BAR: UPLOAD SHIRT IMAGE -->
+      <section class="card input-card glass-card-ultra">
+        <div class="glass-sheen"></div>
+        <div class="input-card-header">
+          <h3>Upload Your Shirt Photo</h3>
+          <p>Drop a photo of your shirt to automatically analyze the tone and match real pant colors</p>
+        </div>
+
+        <div class="single-upload-container">
+          <div class="upload-dropzone glass-dropzone-ultra" id="dropZone">
+            <input type="file" id="shirtImageInput" accept="image/*" class="file-input-hidden">
+            <div class="dropzone-content" id="dropZoneContent">
+              <div class="upload-icon">📸</div>
+              <p class="upload-text"><strong>Click to upload shirt photo</strong> or drag & drop</p>
+              <span class="upload-hint">PNG, JPG, JPEG, WEBP or camera capture</span>
+            </div>
+            <div id="uploadStatus" class="upload-status hidden">
+              <span class="spinner"></span>
+              <span>Analyzing shirt fabric & finding aesthetic pairings...</span>
+            </div>
+          </div>
+
+          <div id="imageControls" class="image-controls glass-chip-ultra hidden">
+            <span id="detectedColorLabel" class="detected-badge">Detected: White Shirt</span>
+            <button id="removeImageBtn" class="btn-text-action" type="button">Upload Another Shirt</button>
+          </div>
+        </div>
+      </section>
+
+      <!-- RESULTS: SIDE-BY-SIDE ON DESKTOP, FLUID ON MOBILE -->
+      <section class="results-grid">
+        
+        <!-- LEFT SIDE: STICKY CLEAN OUTFIT LOOKBOOK (NO NAMES) -->
+        <div class="card outfit-display-card glass-card-ultra" id="lookbookPreviewCard">
+          <div class="glass-sheen"></div>
+          <div class="panel-header">
+            <div>
+              <h3>Outfit Lookbook</h3>
+              <p class="subtext">Seamless top-to-bottom outfit preview</p>
+            </div>
+          </div>
+
+          <!-- SEAMLESS COMBINED OUTFIT VISUALIZER IN FROSTED CRYSTAL GLASS FRAME -->
+          <div class="seamless-outfit-frame glass-photo-frame-ultra" id="lookbookCaptureZone">
+            
+            <!-- TOP: 3/4 SHIRT IMAGE -->
+            <div class="seamless-shirt-box">
+              <img id="uploadedPhotoPreview" src="images/sample_shirt.jpg" alt="Your Shirt" class="big-shirt-img">
+            </div>
+
+            <!-- CLEAN SEAM WAISTLINE DIVIDER -->
+            <div class="outfit-seam-line"></div>
+
+            <!-- BOTTOM: 3/4 MATCHING REAL PANT IMAGE -->
+            <div class="seamless-pant-box">
+              <img id="visualizerPantRealImg" src="images/pant_page_1.jpg" alt="Matching Pant" class="big-pant-img">
+            </div>
+
+          </div>
+
+          <!-- FOOTWEAR & STYLE MATCH BOX (NO NAMES) -->
+          <div class="styling-tip-box glass-card-inner-ultra" id="stylingAdviceBox">
+            <div class="tip-header">
+              <span class="tip-icon">👟</span>
+              <span class="tip-title-label">Footwear Styling</span>
+            </div>
+            <p id="stylingShoeAdvice">Pair with chunky skate sneakers (Vans / Dunks / Campus 00s).</p>
+            <div class="meta-pills" id="outfitMetaPills">
+              <span class="pill glass-pill-ultra" id="vibePill">Light Blue Wash</span>
+              <span class="pill glass-pill-ultra" id="contrastPill">Bright & Airy</span>
+              <span class="pill glass-pill-ultra" id="fabricPill">13.5oz Washed Denim</span>
+            </div>
+          </div>
+
+          <!-- DOWNLOAD LOOKBOOK ACTION BUTTON -->
+          <button type="button" id="downloadLookbookBtn" class="btn btn-download-lookbook glass-btn-primary">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M7 10l5 5 5-5M12 15V3"/></svg>
+            <span id="downloadBtnText">Download Outfit Lookbook</span>
+          </button>
+        </div>
+
+        <!-- RIGHT SIDE: PANT COLOR CATEGORIES & COMBOS LIST -->
+        <div class="card combos-card glass-card-ultra" id="combosCard">
+          <div class="glass-sheen"></div>
+          <div class="panel-header sticky-sub-header">
+            <div>
+              <h3>Pants by Color</h3>
+              <p class="subtext">Select a color category to explore matching pants</p>
+            </div>
+            <span class="scroll-helper-badge glass-chip-ultra">🎨 Color Filter</span>
+          </div>
+
+          <!-- PANT COLOR CATEGORIES FILTER BAR (TOUCH HORIZONTAL SCROLL) -->
+          <div class="filter-pills-bar-wrapper">
+            <div class="filter-pills-bar" id="pantColorFilter">
+              <button class="filter-btn glass-filter-btn-ultra active" data-color-filter="all">✨ All Colors (<span id="countAll">0</span>)</button>
+              <button class="filter-btn glass-filter-btn-ultra filter-blue" data-color-filter="blue">🔵 Blue & Indigo (<span id="countBlue">0</span>)</button>
+              <button class="filter-btn glass-filter-btn-ultra filter-black" data-color-filter="black">⚫ Black & Charcoal (<span id="countBlack">0</span>)</button>
+              <button class="filter-btn glass-filter-btn-ultra filter-green" data-color-filter="green">🟢 Olive & Green (<span id="countGreen">0</span>)</button>
+              <button class="filter-btn glass-filter-btn-ultra filter-cream" data-color-filter="cream">⚪ Cream & White (<span id="countCream">0</span>)</button>
+              <button class="filter-btn glass-filter-btn-ultra filter-brown" data-color-filter="brown">🟤 Beige, Tan & Brown (<span id="countBrown">0</span>)</button>
+            </div>
+          </div>
+
+          <!-- Personalized Age Advice Banner -->
+          <div class="age-tip-banner glass-card-inner-ultra">
+            <span class="banner-icon">💡</span>
+            <span id="personalizedAgeTip">Tailored recommendations for your profile.</span>
+          </div>
+
+          <!-- List of All Pant and Jeans Suggestions -->
+          <div class="combos-list" id="combosListContainer">
+            <!-- Dynamically populated cards -->
+          </div>
+
+        </div>
+
+      </section>
+
+    </main>
+
+    <!-- FLOATING EASY SCROLL CONTROLS (DESKTOP & MOBILE) -->
+    <div class="floating-scroll-bar" id="floatingScrollBar">
+      <button type="button" class="btn-scroll-action glass-chip-ultra" id="scrollToTopBtn" title="Scroll to Top">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M18 15l-6-6-6 6"/></svg>
+        <span>Top</span>
+      </button>
+      <button type="button" class="btn-scroll-action glass-chip-ultra mobile-only" id="scrollToLookbookBtn" title="View Lookbook Preview">
+        <span>👗 Outfit</span>
+      </button>
+    </div>
+
+    <!-- DISCLAIMER & CREATOR CREDITS CARD (COMPACT SMALL FONT) -->
+    <section class="disclaimer-section">
+      <div class="disclaimer-card glass-card-ultra">
+        <div class="glass-sheen"></div>
+        <div class="disclaimer-header">
+          <span class="disclaimer-badge glass-chip-ultra">⚖️ Official Disclaimer & Creator Notice</span>
+          <h3 class="disclaimer-title">Created & Curated by <span>Mallela Vedantheswar</span></h3>
+        </div>
+        <p class="disclaimer-text">
+          <strong>Choose Your Tenue</strong> is an original fashion and outfit color harmonization application conceptualized, designed, and developed by <strong>Mallela Vedantheswar</strong> (<a href="https://www.instagram.com/vedhuu_u?igsi=MW04eDJ3dDV0NHNpYw==" target="_blank" rel="noopener noreferrer" class="creator-inline-tag">@vedhuu_u</a>). All fashion color palettes, pairing algorithms, curated pants collections, and styling recommendations are created for style inspiration and personal styling guidance.
+        </p>
+        <div class="disclaimer-pills-row">
+          <span class="disclaimer-pill glass-chip-ultra">✨ Creator: Mallela Vedantheswar</span>
+          <a href="https://www.instagram.com/vedhuu_u?igsi=MW04eDJ3dDV0NHNpYw==" target="_blank" rel="noopener noreferrer" class="disclaimer-pill glass-chip-ultra disclaimer-link-pill">📸 Instagram: @vedhuu_u</a>
+          <a href="mailto:vedantheswarmalleal104@gmail.com" class="disclaimer-pill glass-chip-ultra disclaimer-link-pill">✉️ Support: vedantheswarmalleal104@gmail.com</a>
+          <span class="disclaimer-pill glass-chip-ultra">🔒 © 2026 All Rights Reserved</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- FOOTER WITH INSTAGRAM & SUPPORT EMAIL (DESKTOP & MOBILE) -->
+    <footer class="app-footer">
+      <div class="footer-card glass-card-ultra">
+        <div class="glass-sheen"></div>
+        <div class="footer-logo-badge glass-chip-ultra">
+          <img src="images/logo.png" alt="Choose Your Tenue" class="footer-logo-img">
+        </div>
+        <p class="footer-title"><strong>Choose Your Tenue</strong> • Created by <strong>Mallela Vedantheswar</strong> (<a href="https://www.instagram.com/vedhuu_u?igsi=MW04eDJ3dDV0NHNpYw==" target="_blank" rel="noopener noreferrer" class="creator-inline-tag">@vedhuu_u</a>)</p>
+        
+        <div class="footer-links-group">
+          <!-- INSTAGRAM LINK -->
+          <a href="https://www.instagram.com/vedhuu_u?igsi=MW04eDJ3dDV0NHNpYw==" target="_blank" rel="noopener noreferrer" class="footer-link-pill glass-chip-ultra">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg>
+            <span>Instagram: <strong>@vedhuu_u</strong></span>
+          </a>
+
+          <!-- SUPPORT EMAIL LINK -->
+          <a href="mailto:vedantheswarmalleal104@gmail.com" class="footer-link-pill glass-chip-ultra">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
+            <span class="footer-email-text">Support: <strong>vedantheswarmalleal104@gmail.com</strong></span>
+          </a>
+        </div>
+
+        <p class="footer-copyright">© 2026 Choose Your Tenue by Mallela Vedantheswar. All rights reserved.</p>
+      </div>
+    </footer>
+
+  </div>
+
+  <!-- PRIVATE CREATOR DATA VAULT MODAL (PROTECTED BY PIN) -->
+  <div id="adminVaultModal" class="vault-modal-backdrop hidden" aria-hidden="true" role="dialog">
+    <div class="vault-modal-container glass-card-ultra">
+      <div class="glass-sheen"></div>
+      
+      <!-- VAULT HEADER -->
+      <div class="vault-header">
+        <div class="vault-title-box">
+          <span class="vault-badge glass-chip-ultra">🔒 Creator Data Vault</span>
+          <h3 class="vault-title">User Analytics & Database</h3>
+          <p class="vault-sub">Private dashboard for <strong>Mallela Vedantheswar</strong></p>
+        </div>
+        <button type="button" class="btn-vault-close glass-chip-ultra" id="closeVaultBtn" aria-label="Close Vault">✕</button>
+      </div>
+
+      <!-- PIN AUTHENTICATION GATE -->
+      <div id="vaultAuthSection" class="vault-auth-box glass-card-inner-ultra">
+        <div class="vault-lock-icon">🔐</div>
+        <h4>Enter Creator PIN</h4>
+        <p>Enter your private PIN to view registered users data</p>
+        <form id="vaultAuthForm" class="vault-pin-form">
+          <input type="password" id="vaultPinInput" placeholder="Enter PIN (e.g. vedhu)" required class="glass-input-ultra pin-input">
+          <button type="submit" class="btn btn-primary glass-btn-primary">Unlock Vault</button>
+        </form>
+        <p id="vaultAuthError" class="vault-error-msg hidden">Incorrect PIN. Access denied.</p>
+      </div>
+
+      <!-- UNLOCKED CREATOR DATA DASHBOARD -->
+      <div id="vaultDashboardSection" class="vault-dashboard hidden">
+        
+        <!-- METRICS TILES -->
+        <div class="vault-metrics-grid">
+          <div class="metric-tile glass-card-inner-ultra">
+            <span class="metric-label">Total Styled Users</span>
+            <span class="metric-value" id="vaultTotalUsers">0</span>
+          </div>
+          <div class="metric-tile glass-card-inner-ultra">
+            <span class="metric-label">Average Age</span>
+            <span class="metric-value" id="vaultAvgAge">0</span>
+          </div>
+          <div class="metric-tile glass-card-inner-ultra">
+            <span class="metric-label">Total Visits</span>
+            <span class="metric-value" id="vaultTotalVisits">0</span>
+          </div>
+        </div>
+
+        <!-- ACTIONS BAR -->
+        <div class="vault-actions-bar">
+          <input type="text" id="vaultSearchInput" placeholder="🔍 Search by name..." class="glass-input-ultra vault-search-input">
+          <button type="button" id="exportCsvBtn" class="btn-export-csv glass-chip-ultra">
+            <span>📥 Export to Excel / CSV</span>
+          </button>
+        </div>
+
+        <!-- USER RECORDS TABLE -->
+        <div class="vault-table-wrapper">
+          <table class="vault-table">
+            <thead>
+              <tr>
+                <th>#</th>
+                <th>Name</th>
+                <th>Age</th>
+                <th>Joined Date</th>
+                <th>Last Login</th>
+                <th>Visits</th>
+              </tr>
+            </thead>
+            <tbody id="vaultTableBody">
+              <!-- Dynamically populated rows -->
+            </tbody>
+          </table>
+        </div>
+
+        <div class="vault-footer-actions">
+          <button type="button" id="clearVaultBtn" class="btn-clear-vault">Clear All Records</button>
+          <button type="button" id="lockVaultBtn" class="btn-lock-vault glass-chip-ultra">Lock Vault</button>
+        </div>
+
+      </div>
+
+    </div>
+  </div>
+
+  <!-- HIDDEN CANVAS FOR COLOR EXTRACTION & LOOKBOOK EXPORT -->
+  <canvas id="colorCanvas" style="display:none;"></canvas>
+  <canvas id="lookbookExportCanvas" style="display:none;"></canvas>
+
+  <script src="app.js"></script>
+</body>
+</html>

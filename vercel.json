@@ -1,0 +1,10 @@
+{
+  "version": 2,
+  "name": "choose-your-tenue",
+  "routes": [
+    {
+      "src": "/(.*)",
+      "dest": "/$1"
+    }
+  ]
+}
