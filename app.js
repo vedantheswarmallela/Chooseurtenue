@@ -1213,17 +1213,21 @@ function bindEvents() {
 
   // Window Scroll Listener for Floating Scroll Controls
   window.addEventListener('scroll', () => {
-    if (window.scrollY > 280) {
-      elements.floatingScrollBar.classList.add('visible');
-    } else {
-      elements.floatingScrollBar.classList.remove('visible');
+    if (elements.floatingScrollBar) {
+      if (window.scrollY > 280) {
+        elements.floatingScrollBar.classList.add('visible');
+      } else {
+        elements.floatingScrollBar.classList.remove('visible');
+      }
     }
   });
 
   // Scroll to Top Action Button
-  elements.scrollToTopBtn.addEventListener('click', () => {
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-  });
+  if (elements.scrollToTopBtn) {
+    elements.scrollToTopBtn.addEventListener('click', () => {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+  }
 
   // Mobile Floating Quick Download Button
   const mobileDownloadFloatBtn = document.getElementById('mobileDownloadFloatBtn');
