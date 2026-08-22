@@ -1199,8 +1199,12 @@ function bindEvents() {
     renderCombosList();
   });
 
-  // Download Lookbook Button
+  // Download Lookbook Button (Main Visualizer & Below Combos List)
   elements.downloadLookbookBtn.addEventListener('click', downloadOutfitLookbook);
+  const downloadCombosBottomBtn = document.getElementById('downloadCombosBottomBtn');
+  if (downloadCombosBottomBtn) {
+    downloadCombosBottomBtn.addEventListener('click', downloadOutfitLookbook);
+  }
 
   // File Upload Dropzone Events
   elements.dropZone.addEventListener('click', () => {
