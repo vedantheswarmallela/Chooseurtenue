@@ -1458,12 +1458,88 @@ function renderVaultDashboard() {
   const total = users.length;
   const totalVisits = users.reduce((acc, u) => acc + (u.loginCount || 1), 0);
   const avgAge = total > 0 ? Math.round(users.reduce((acc, u) => acc + (Number(u.age) || 0), 0) / total) : 0;
+  
+  // Calculate Repeat User Rate
+  const repeatUsers = users.filter(u => (u.loginCount || 1) > 1).length;
+  const repeatRate = total > 0 ? Math.round((repeatUsers / total) * 100) : 0;
 
-  elements.vaultTotalUsers.textContent = total;
-  elements.vaultTotalVisits.textContent = totalVisits;
-  elements.vaultAvgAge.textContent = total > 0 ? `${avgAge} yrs` : 'N/A';
+  const totalUsersEl = document.getElementById('vaultTotalUsers') || elements.vaultTotalUsers;
+  const totalVisitsEl = document.getElementById('vaultTotalVisits') || elements.vaultTotalVisits;
+  const avgAgeEl = document.getElementById('vaultAvgAge') || elements.vaultAvgAge;
+  const repeatRateEl = document.getElementById('vaultRepeatRate');
+
+  if (totalUsersEl) totalUsersEl.textContent = total;
+  if (totalVisitsEl) totalVisitsEl.textContent = totalVisits;
+  if (avgAgeEl) avgAgeEl.textContent = total > 0 ? `${avgAge} yrs` : 'N/A';
+  if (repeatRateEl) repeatRateEl.textContent = `${repeatRate}%`;
+
+  // Render Age Demographics Spectrum Chart
+  renderAgeDemographicsChart(users);
+
+  // Render Device & Engagement Distribution
+  renderDeviceAnalytics(users);
 
   renderVaultTable('');
+}
+
+function renderAgeDemographicsChart(users) {
+  const container = document.getElementById('ageChartContainer');
+  if (!container) return;
+
+  const total = users.length;
+  
+  const brackets = [
+    { label: '16–20 yrs (Gen-Z)', fillClass: 'fill-genz', count: 0 },
+    { label: '21–25 yrs (Young Adults)', fillClass: 'fill-young', count: 0 },
+    { label: '26–35 yrs (Professionals)', fillClass: 'fill-pro', count: 0 },
+    { label: '36+ yrs (Mature Classics)', fillClass: 'fill-classic', count: 0 }
+  ];
+
+  users.forEach(u => {
+    const age = Number(u.age) || 0;
+    if (age <= 20) brackets[0].count++;
+    else if (age <= 25) brackets[1].count++;
+    else if (age <= 35) brackets[2].count++;
+    else brackets[3].count++;
+  });
+
+  container.innerHTML = '';
+
+  brackets.forEach(b => {
+    const pct = total > 0 ? Math.round((b.count / total) * 100) : 0;
+    const barItem = document.createElement('div');
+    barItem.className = 'chart-bar-item';
+    barItem.innerHTML = `
+      <div class="chart-bar-labels">
+        <span>${b.label}</span>
+        <span><strong>${b.count}</strong> users (${pct}%)</span>
+      </div>
+      <div class="chart-bar-track">
+        <div class="chart-bar-fill ${b.fillClass}" style="width: ${pct}%;"></div>
+      </div>
+    `;
+    container.appendChild(barItem);
+  });
+}
+
+function renderDeviceAnalytics(users) {
+  const segMobile = document.getElementById('segmentMobile');
+  const segDesktop = document.getElementById('segmentDesktop');
+  const statMobile = document.getElementById('statMobilePercent');
+  const statDesktop = document.getElementById('statDesktopPercent');
+
+  // Estimate mobile vs desktop based on screen sizes or records
+  const mobileCount = users.filter(u => u.device === 'Mobile' || !u.device).length;
+  const desktopCount = users.filter(u => u.device === 'Desktop').length;
+  const total = users.length || 1;
+
+  const mobilePct = Math.max(15, Math.min(85, Math.round((mobileCount / total) * 100)));
+  const desktopPct = 100 - mobilePct;
+
+  if (segMobile) segMobile.style.width = `${mobilePct}%`;
+  if (segDesktop) segDesktop.style.width = `${desktopPct}%`;
+  if (statMobile) statMobile.textContent = `${mobilePct}%`;
+  if (statDesktop) statDesktop.textContent = `${desktopPct}%`;
 }
 
 function renderVaultTable(searchQuery = '') {

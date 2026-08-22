@@ -337,6 +337,50 @@
             <span class="metric-label">Total Visits</span>
             <span class="metric-value" id="vaultTotalVisits">0</span>
           </div>
+          <div class="metric-tile glass-card-inner-ultra">
+            <span class="metric-label">Repeat Rate</span>
+            <span class="metric-value" id="vaultRepeatRate">0%</span>
+          </div>
+        </div>
+
+        <!-- INTERACTIVE DATA VISUALIZATION CHARTS -->
+        <div class="vault-charts-grid">
+          
+          <!-- CHART 1: AGE DEMOGRAPHICS SPECTRUM -->
+          <div class="vault-chart-card glass-card-inner-ultra">
+            <div class="chart-header">
+              <span class="chart-icon">📊</span>
+              <h4>Age Demographics Breakdown</h4>
+            </div>
+            <div class="chart-bars-list" id="ageChartContainer">
+              <!-- Dynamically populated animated age bars -->
+            </div>
+          </div>
+
+          <!-- CHART 2: DEVICE & ENGAGEMENT METRICS -->
+          <div class="vault-chart-card glass-card-inner-ultra">
+            <div class="chart-header">
+              <span class="chart-icon">📱</span>
+              <h4>Device & Engagement Share</h4>
+            </div>
+            <div class="device-stats-wrapper">
+              <div class="device-ratio-bar" id="deviceRatioBar">
+                <div class="ratio-segment segment-mobile" id="segmentMobile" style="width: 75%;"></div>
+                <div class="ratio-segment segment-desktop" id="segmentDesktop" style="width: 25%;"></div>
+              </div>
+              <div class="device-legend-row">
+                <div class="legend-item">
+                  <span class="legend-dot dot-mobile"></span>
+                  <span>Mobile: <strong id="statMobilePercent">75%</strong></span>
+                </div>
+                <div class="legend-item">
+                  <span class="legend-dot dot-desktop"></span>
+                  <span>Desktop: <strong id="statDesktopPercent">25%</strong></span>
+                </div>
+              </div>
+            </div>
+          </div>
+
         </div>
 
         <!-- ACTIONS BAR -->
