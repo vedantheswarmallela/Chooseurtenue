@@ -1677,10 +1677,45 @@ button {
   box-shadow: 0 8px 24px rgba(139, 92, 246, 0.4);
 }
 
+.footer-bottom-row {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  width: 100%;
+  position: relative;
+}
+
 .footer-copyright {
   font-size: 0.76rem;
   color: var(--text-dim);
   margin-top: 0.15rem;
+}
+
+/* Discreet Low-Opacity Bottom Vault Buttons */
+.btn-subtle-vault {
+  background: none;
+  border: none;
+  font-size: 0.85rem;
+  cursor: pointer;
+  opacity: 0.22;
+  transition: opacity 0.3s ease, transform 0.2s ease;
+  padding: 4px;
+}
+
+.btn-subtle-vault:hover, .btn-subtle-vault:active {
+  opacity: 0.85;
+  transform: scale(1.15);
+}
+
+.btn-floating-vault-discreet {
+  opacity: 0.38 !important;
+  transition: opacity 0.3s ease, transform 0.2s ease !important;
+}
+
+.btn-floating-vault-discreet:hover, .btn-floating-vault-discreet:active {
+  opacity: 0.95 !important;
+  transform: translateY(-3px) scale(1.05) !important;
 }
 
 /* ========================================================

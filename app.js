@@ -1311,9 +1311,9 @@ function createButtonRipple(event, button) {
 }
 
 // ========================================================
-// PRIVATE CREATOR DATA VAULT (PIN: vedhu)
+// PRIVATE CREATOR DATA VAULT (PIN: Veda@630)
 // ========================================================
-const CREATOR_MASTER_PIN = 'vedhu'; // Master Passcode for Mallela Vedantheswar
+const CREATOR_MASTER_PIN = 'Veda@630'; // Master Passcode for Mallela Vedantheswar
 
 function bindVaultEvents() {
   // Secret Shortcut: Ctrl + Shift + A or Alt + V to open Creator Vault
@@ -1357,14 +1357,14 @@ function bindVaultEvents() {
     });
   });
 
-  // Open Vault Buttons (Header & Floating Bar)
-  const headerVaultBtn = document.getElementById('openVaultHeaderBtn');
-  if (headerVaultBtn) {
-    headerVaultBtn.addEventListener('click', openVaultModal);
-  }
+  // Open Vault Buttons (Floating Bar & Footer Discreet Button)
   const floatingVaultBtn = document.getElementById('openVaultFloatingBtn');
   if (floatingVaultBtn) {
     floatingVaultBtn.addEventListener('click', openVaultModal);
+  }
+  const footerVaultBtn = document.getElementById('openVaultFooterBtn');
+  if (footerVaultBtn) {
+    footerVaultBtn.addEventListener('click', openVaultModal);
   }
 
   // Close Vault
@@ -1392,6 +1392,8 @@ function bindVaultEvents() {
         renderVaultDashboard();
       } else {
         elements.vaultAuthError.classList.remove('hidden');
+        // Record and notify creator of unauthorized access attempt
+        recordSecurityAlert(enteredPin);
       }
     });
   }
@@ -1524,10 +1526,39 @@ function exportVaultToCsv() {
   document.body.removeChild(link);
 }
 
-function clearVaultData() {
-  if (confirm('Are you sure you want to clear all user database records? This cannot be undone.')) {
-    localStorage.removeItem('huestyle_users_vault');
-    renderVaultDashboard();
+function recordSecurityAlert(attemptedPin) {
+  try {
+    const alertData = {
+      type: 'SECURITY_ALERT_UNAUTHORIZED_PIN_ATTEMPT',
+      attemptedPin: attemptedPin || 'blank',
+      timestamp: new Date().toLocaleString(),
+      device: window.innerWidth <= 768 ? 'Mobile' : 'Desktop',
+      userAgent: navigator.userAgent
+    };
+
+    // Save alert into vault alert logs
+    let alerts = JSON.parse(localStorage.getItem('huestyle_security_alerts') || '[]');
+    alerts.push(alertData);
+    localStorage.setItem('huestyle_security_alerts', JSON.stringify(alerts));
+
+    // Send Security Notification to Google Sheet
+    if (GOOGLE_SHEET_API_URL && GOOGLE_SHEET_API_URL.trim() !== '') {
+      fetch(GOOGLE_SHEET_API_URL, {
+        method: 'POST',
+        mode: 'no-cors',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          name: '⚠️ SECURITY ALERT: PIN Attempt (' + (attemptedPin || 'wrong') + ')',
+          age: 'ALERT',
+          timestamp: alertData.timestamp,
+          device: alertData.device
+        })
+      }).catch(() => {});
+    }
+
+    console.warn('Security alert: Unauthorized access attempt registered.');
+  } catch (e) {
+    console.error('Security alert recording notice:', e);
   }
 }
 
