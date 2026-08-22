@@ -657,7 +657,13 @@ function saveUser(name, age) {
   showStudio();
 }
 
-// Record User into Private Creator Vault
+// ========================================================
+// GOOGLE SHEETS LIVE CLOUD DATABASE CONFIGURATION
+// ========================================================
+// Paste your Google Apps Script Web App URL below to sync all worldwide visitors:
+const GOOGLE_SHEET_API_URL = ''; // e.g. 'https://script.google.com/macros/s/.../exec'
+
+// Record User into Private Creator Vault & Sync to Google Sheet
 function recordUserInVault(name, age) {
   try {
     let vault = JSON.parse(localStorage.getItem('huestyle_users_vault') || '[]');
@@ -680,8 +686,36 @@ function recordUserInVault(name, age) {
     }
 
     localStorage.setItem('huestyle_users_vault', JSON.stringify(vault));
+
+    // Live Sync to Google Sheets Cloud Database
+    syncToGoogleSheet(name, age, now);
   } catch (e) {
     console.error('Could not record user into vault:', e);
+  }
+}
+
+// Send Visitor Data to Google Sheet
+function syncToGoogleSheet(name, age, timestamp) {
+  if (!GOOGLE_SHEET_API_URL || GOOGLE_SHEET_API_URL.trim() === '') {
+    return; // Google Sheet URL not configured yet
+  }
+
+  try {
+    fetch(GOOGLE_SHEET_API_URL, {
+      method: 'POST',
+      mode: 'no-cors',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        name: name,
+        age: age,
+        timestamp: timestamp || new Date().toLocaleString(),
+        device: window.innerWidth <= 768 ? 'Mobile' : 'Desktop'
+      })
+    }).catch(err => console.log('Google sheet sync background notice:', err));
+  } catch (err) {
+    console.log('Sheet sync notice:', err);
   }
 }
 
