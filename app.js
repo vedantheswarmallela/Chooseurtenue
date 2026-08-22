@@ -1357,6 +1357,16 @@ function bindVaultEvents() {
     });
   });
 
+  // Open Vault Buttons (Header & Floating Bar)
+  const headerVaultBtn = document.getElementById('openVaultHeaderBtn');
+  if (headerVaultBtn) {
+    headerVaultBtn.addEventListener('click', openVaultModal);
+  }
+  const floatingVaultBtn = document.getElementById('openVaultFloatingBtn');
+  if (floatingVaultBtn) {
+    floatingVaultBtn.addEventListener('click', openVaultModal);
+  }
+
   // Close Vault
   if (elements.closeVaultBtn) {
     elements.closeVaultBtn.addEventListener('click', closeVaultModal);
